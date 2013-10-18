@@ -2,6 +2,9 @@
     "name": "astina/deadlink-bundle",
     "description": "Symfony bundle that provides services to find broken link URLs.",
     "license": "MIT",
+    "keywords": ["broken links", "dead urls"],
+    "type": "symfony-bundle",
+    "homepage": "http://astina.ch",
     "authors": [
         {
             "name": "Astina AG",
