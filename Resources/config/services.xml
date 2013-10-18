@@ -1,0 +1,26 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="astina_deadlink.deadlink_finder.class">Astina\Bundle\DeadlinkBundle\Link\DeadlinkFinder</parameter>
+        <parameter key="astina_deadlink.url_checker.class">Astina\Bundle\DeadlinkBundle\Link\UrlChecker</parameter>
+        <parameter key="astina_deadlink.url_checker.timeout">5</parameter>
+    </parameters>
+
+    <services>
+
+        <service id="astina_deadlink.deadlink_finder" class="%astina_deadlink.deadlink_finder.class%">
+            <argument type="service" id="astina_deadlink.url_checker" />
+            <argument type="service" id="event_dispatcher" />
+        </service>
+
+        <service id="astina_deadlink.url_checker" class="%astina_deadlink.url_checker.class%">
+            <argument>%astina_deadlink.url_checker.timeout%</argument>
+        </service>
+
+    </services>
+
+</container>

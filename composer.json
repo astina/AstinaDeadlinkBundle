@@ -1,0 +1,19 @@
+{
+    "name": "astina/deadlink-bundle",
+    "description": "Symfony bundle that provides services to find broken link URLs.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Astina AG",
+            "email": "admin@astina.ch"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+
+    },
+    "autoload": {
+        "psr-0": { "Astina\\Bundle\\DeadlinkBundle": "" }
+    },
+    "target-dir": "Astina/Bundle/DeadlinkBundle"
+}
