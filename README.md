@@ -35,10 +35,12 @@ public function registerBundles()
 The bundle provides a command (`astina:deadlink:check`) that checks so called "link sources" for broken links and dispatches a `BrokenLinksEvent` if one or more broken links are found for a given source.
 
 **To create a link source:**
+
 1. Create a class that implements `Astina\Bundle\DeadlinkBundle\Link\LinkSourceInterface`.
 2. Configure that class as a service and tag it as `astina_deadlink.link_source`.
 
 **To react to broken links:**
+
 1. Create an event listener.
 2. Listen to the `astina_deadlink.broken_links` event.
 
