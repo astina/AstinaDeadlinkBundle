@@ -42,7 +42,7 @@ class DoctrineLinkSource implements LinkSourceInterface
      */
     protected $propertyAccessor;
 
-    function __construct(RegistryInterface $doctrine, $className, array $properties, $criteria = array(), UrlExtractor $urlExtractor)
+    function __construct(RegistryInterface $doctrine, $className, array $properties, $criteria = array(), UrlExtractor $urlExtractor = null)
     {
         $this->manager = $doctrine->getManager();
         $this->className = $className;
