@@ -65,6 +65,10 @@ class DeadlinkListener
 }
 ```
 
+**Find broken links:**
+
+Run the `astina:deadlink:check` command to check all registered link sources for broken links. If a broken link is found, the `astina_deadlink.broken_links` event is dispatched.
+
 ####DoctrineLinkSource
 If you have are using Doctrine and have an Entity or Document that contain URLs (or text that contains URLs) you can use `Astina\Bundle\DeadlinkBundle\Doctrine\DoctrineLinkSource` and configure a service like this:
 
