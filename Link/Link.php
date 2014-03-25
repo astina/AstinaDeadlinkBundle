@@ -14,6 +14,19 @@ class Link
         $this->context = $context;
     }
 
+    public function __toString()
+    {
+        $str = $this->url;
+
+        if ($this->context) {
+            try {
+                $str .= ' [' . var_export($this->context, true) . ']';
+            } catch (\Exception $e) {};
+        }
+
+        return $str;
+    }
+
     public function getUrl()
     {
         return $this->url;

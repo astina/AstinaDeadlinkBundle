@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="astina_deadlink.url_checker.cache_timeout">3600</parameter>
+        <parameter key="astina_deadlink.cache_provider.class">Doctrine\Common\Cache\FilesystemCache</parameter>
+        <parameter key="astina_deadlink.cache_provider.dir">%kernel.cache_dir%/url-checks</parameter>
+    </parameters>
+
+    <services>
+
+        <service id="astina_deadlink.url_checker.cache" class="Astina\Bundle\DeadlinkBundle\Link\CacheUrlChecker">
+            <argument type="service" id="astina_deadlink.url_checker.real" />
+            <argument type="service" id="astina_deadlink.cache_provider" />
+            <argument>%astina_deadlink.url_checker.cache_timeout%</argument>
+        </service>
+
+        <service id="astina_deadlink.cache_provider" class="%astina_deadlink.cache_provider.class%">
+            <argument>%astina_deadlink.cache_provider.dir%</argument>
+        </service>
+
+    </services>
+
+</container>

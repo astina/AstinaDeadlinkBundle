@@ -2,7 +2,7 @@
 
 namespace Astina\Bundle\DeadlinkBundle\Link;
 
-class UrlChecker
+class UrlChecker implements UrlCheckerInterface
 {
     private $timeout;
 
@@ -11,28 +11,19 @@ class UrlChecker
         $this->timeout = $timeout;
     }
 
-    /**
-     * @param $url
-     * @return bool Whether URL is "broken" or not
-     */
     public function check($url)
     {
         if (!filter_var($url, FILTER_VALIDATE_URL)) {
             return false;
         }
 
-        $context = stream_context_create(array(
-            'http' => array(
-                'timeout' => $this->timeout,
-            ),
-        ));
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $this->timeout);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $success = false !== @curl_exec($ch);
+        curl_close($ch);
 
-        $fp = @fopen($url, 'r', false, $context);
-
-        if ($fp) {
-            fclose($fp);
-        }
-
-        return $fp !== false;
+        return $success;
     }
 }

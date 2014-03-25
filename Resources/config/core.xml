@@ -8,6 +8,7 @@
         <parameter key="astina_deadlink.deadlink_finder.class">Astina\Bundle\DeadlinkBundle\Link\DeadlinkFinder</parameter>
         <parameter key="astina_deadlink.url_checker.class">Astina\Bundle\DeadlinkBundle\Link\UrlChecker</parameter>
         <parameter key="astina_deadlink.url_checker.timeout">5</parameter>
+        <parameter key="astina_deadlink.url_extractor.class">Astina\Bundle\DeadlinkBundle\Link\UrlExtractor</parameter>
     </parameters>
 
     <services>
@@ -17,9 +18,13 @@
             <argument type="service" id="event_dispatcher" />
         </service>
 
-        <service id="astina_deadlink.url_checker" class="%astina_deadlink.url_checker.class%">
+        <service id="astina_deadlink.url_checker" alias="astina_deadlink.url_checker.real" />
+
+        <service id="astina_deadlink.url_checker.real" class="%astina_deadlink.url_checker.class%">
             <argument>%astina_deadlink.url_checker.timeout%</argument>
         </service>
+
+        <service id="astina_deadlink.url_extractor" class="%astina_deadlink.url_extractor.class%" />
 
     </services>
 

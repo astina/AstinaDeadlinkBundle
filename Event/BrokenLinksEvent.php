@@ -1,7 +1,9 @@
 <?php
 
-namespace Astina\Bundle\DeadlinkBundle\Link;
+namespace Astina\Bundle\DeadlinkBundle\Event;
 
+use Astina\Bundle\DeadlinkBundle\Link\Link;
+use Astina\Bundle\DeadlinkBundle\Link\LinkSourceInterface;
 use Symfony\Component\EventDispatcher\Event;
 
 class BrokenLinksEvent extends Event

@@ -54,7 +54,7 @@ Example:
 ```php
 namespace Acme\FooBundle;
 
-use Astina\Bundle\DeadlinkBundle\Link\BrokenLinksEvent;
+use Astina\Bundle\DeadlinkBundle\Event\BrokenLinksEvent;
 
 class DeadlinkListener
 {
@@ -63,6 +63,20 @@ class DeadlinkListener
         // ZOMG!
     }
 }
+```
+
+This bundle comes with a `LoggingListener` which logs broken links. In the logger config you can then decide what to do with the log message.
+
+Example:
+```yml
+services:
+    astina_deadlink.listener.logger:
+        class: Astina\Bundle\DeadlinkBundle\Event\LoggingListener
+        arguments:
+            - @logger
+            - critical # log broken links as critical message
+        tags:
+            - { name: kernel.event_listener, event: astina_deadlink.broken_links, method: onBrokenLinks }
 ```
 
 **Find broken links:**

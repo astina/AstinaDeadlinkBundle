@@ -2,6 +2,7 @@
 
 namespace Astina\Bundle\DeadlinkBundle\Link;
 
+use Astina\Bundle\DeadlinkBundle\Event\BrokenLinksEvent;
 use Symfony\Component\Console\Helper\ProgressHelper;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -15,7 +16,7 @@ class DeadlinkFinder
     protected $linkSources = array();
 
     /**
-     * @var UrlChecker
+     * @var UrlCheckerInterface
      */
     protected $urlChecker;
 
@@ -29,7 +30,7 @@ class DeadlinkFinder
      */
     protected $output;
 
-    public function __construct(UrlChecker $urlChecker, EventDispatcherInterface $dispatcher)
+    public function __construct(UrlCheckerInterface $urlChecker, EventDispatcherInterface $dispatcher)
     {
         $this->urlChecker = $urlChecker;
         $this->dispatcher = $dispatcher;
