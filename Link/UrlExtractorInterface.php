@@ -14,4 +14,9 @@ interface UrlExtractorInterface
      * @param boolean $decodeHtml
      */
     public function setDecodeHtml($decodeHtml);
+
+    /**
+     * @param $baseUrl
+     */
+    public function setBaseUrl($baseUrl);
 }

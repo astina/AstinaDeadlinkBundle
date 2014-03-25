@@ -29,5 +29,10 @@ class AstinaDeadlinkExtension extends Extension
             $loader->load('cache.xml');
             $container->setAlias('astina_deadlink.url_checker', 'astina_deadlink.url_checker.cache');
         }
+
+        if ($config['base_url']) {
+            $extractor = $container->getDefinition('astina_deadlink.url_extractor');
+            $extractor->addMethodCall('setBaseUrl', array($config['base_url']));
+        }
     }
 }
