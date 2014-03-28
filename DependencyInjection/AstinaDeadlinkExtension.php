@@ -34,5 +34,10 @@ class AstinaDeadlinkExtension extends Extension
             $extractor = $container->getDefinition('astina_deadlink.url_extractor');
             $extractor->addMethodCall('setBaseUrl', array($config['base_url']));
         }
+
+        if ($config['exclude']) {
+            $finder = $container->getDefinition('astina_deadlink.deadlink_finder');
+            $finder->addMethodCall('setExcludePatterns', array($config['exclude']));
+        }
     }
 }

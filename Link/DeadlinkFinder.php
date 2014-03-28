@@ -16,6 +16,11 @@ class DeadlinkFinder
     protected $linkSources = array();
 
     /**
+     * @var array
+     */
+    protected $excludePatterns = array();
+
+    /**
      * @var UrlCheckerInterface
      */
     protected $urlChecker;
@@ -66,14 +71,7 @@ class DeadlinkFinder
 
         foreach ($links as $link) {
 
-            $this->output->write(str_pad(sprintf(' > <info>%s</info> ', $link->getUrl()), 100, '.') . ' ');
-
-            if ($this->urlChecker->check($link->getUrl())) {
-                $this->output->writeln('<comment>ok</comment>');
-            } else {
-                $brokenLinks[] = $link;
-                $this->output->writeln('<error>broken</error>');
-            }
+            $this->checkLink($link);
         }
 
         if (($count = count($brokenLinks)) == 0) {
@@ -83,6 +81,34 @@ class DeadlinkFinder
         $this->output->writeln(sprintf(' > <comment>%d</comment> dead links found', $count));
 
         $this->dispatcher->dispatch(BrokenLinksEvent::NAME, new BrokenLinksEvent($linkSource, $brokenLinks));
+    }
+
+    protected function checkLink(Link $link)
+    {
+        $this->output->write(str_pad(sprintf(' > <info>%s</info> ', $link->getUrl()), 100, '.') . ' ');
+
+        if ($this->isExcluded($link->getUrl())) {
+            $this->output->writeln('excluded');
+            return;
+        }
+
+        if ($this->urlChecker->check($link->getUrl())) {
+            $this->output->writeln('<comment>ok</comment>');
+        } else {
+            $brokenLinks[] = $link;
+            $this->output->writeln('<error>broken</error>');
+        }
+    }
+
+    protected function isExcluded($url)
+    {
+        foreach ($this->excludePatterns as $excludePattern) {
+            if (preg_match($excludePattern, $url)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -99,5 +125,13 @@ class DeadlinkFinder
     public function setProgressHelper($progressHelper)
     {
         $this->progressHelper = $progressHelper;
+    }
+
+    /**
+     * @param array $excludePatterns
+     */
+    public function setExcludePatterns(array $excludePatterns = array())
+    {
+        $this->excludePatterns = $excludePatterns;
     }
 }

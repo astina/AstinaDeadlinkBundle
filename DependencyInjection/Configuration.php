@@ -24,6 +24,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('caching')->defaultFalse()->info('If set to true, URL checks are cached to prevent accessing the same URL multiple times in short order.')->end()
                 ->scalarNode('base_url')->defaultNull()->info('Base URL for relative HTML links')->end()
+                ->arrayNode('exclude')->prototype('scalar')->end()->defaultValue(array())->info('List of regex patterns to match URls that should not be checked')->end()
             ->end()
         ;
 
