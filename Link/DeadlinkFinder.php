@@ -70,8 +70,9 @@ class DeadlinkFinder
         $brokenLinks = array();
 
         foreach ($links as $link) {
-
-            $this->checkLink($link);
+            if (false === $this->checkLink($link)) {
+                $brokenLinks[] = $link;
+            }
         }
 
         if (($count = count($brokenLinks)) == 0) {
@@ -83,20 +84,25 @@ class DeadlinkFinder
         $this->dispatcher->dispatch(BrokenLinksEvent::NAME, new BrokenLinksEvent($linkSource, $brokenLinks));
     }
 
+    /**
+     * @param Link $link
+     * @return bool  true if the link is ok, false if the link is broken
+     */
     protected function checkLink(Link $link)
     {
         $this->output->write(str_pad(sprintf(' > <info>%s</info> ', $link->getUrl()), 100, '.') . ' ');
 
         if ($this->isExcluded($link->getUrl())) {
             $this->output->writeln('excluded');
-            return;
+            return true;
         }
 
         if ($this->urlChecker->check($link->getUrl())) {
             $this->output->writeln('<comment>ok</comment>');
+            return true;
         } else {
-            $brokenLinks[] = $link;
             $this->output->writeln('<error>broken</error>');
+            return false;
         }
     }
 
