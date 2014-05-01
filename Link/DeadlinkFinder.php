@@ -3,7 +3,6 @@
 namespace Astina\Bundle\DeadlinkBundle\Link;
 
 use Astina\Bundle\DeadlinkBundle\Event\BrokenLinksEvent;
-use Symfony\Component\Console\Helper\ProgressHelper;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
